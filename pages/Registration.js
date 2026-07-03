@@ -1,4 +1,4 @@
-class registraionPage {
+class RegistrationPage {
   constructor(page) {
 
     this.page = page;

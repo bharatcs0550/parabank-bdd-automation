@@ -19,9 +19,9 @@ class AccountPage {
   }
 
   async getBalance() {
-    // Wait for the accounts table to be visible
+    
     await this.accountsTable.waitFor({ state: 'visible' });
-    // Get the first account's balance
+    
     const balance = await this.balanceCells.first().textContent();
     return balance.trim();
   }
