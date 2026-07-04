@@ -41,6 +41,29 @@ class RegistrationPage {
   async getSuccessMessage() {
     return await this.successMessage.textContent();
   }
+
+
+
+  async registerWithMismatchedPasswords(user) {
+  await this.firstName.fill(user.firstName);
+  await this.lastName.fill(user.lastName);
+  await this.address.fill(user.address);
+  await this.city.fill(user.city);
+  await this.state.fill(user.state);
+  await this.zipCode.fill(user.zipCode);
+  await this.phone.fill(user.phone);
+  await this.ssn.fill(user.ssn);
+  await this.username.fill(user.username);
+  await this.password.fill(user.password);
+  await this.confirmPassword.fill(user.password + 'wrong');
+  await this.registerButton.click();
 }
+
+async getErrorMessage() {
+  return await this.page.locator('.error, #rightPanel .error').first().textContent();
+}
+}
+
+
 
 module.exports = { RegistrationPage };

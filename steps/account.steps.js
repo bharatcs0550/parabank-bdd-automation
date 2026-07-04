@@ -1,8 +1,8 @@
 const { expect } = require('@playwright/test');
 const { createBdd } = require('playwright-bdd');
-const RegistrationPage = require('../pages/Registration');
-const LoginPage = require('../pages/login');
-const AccountPage = require('../pages/account');
+const { RegistrationPage } = require('../pages/Registration');
+const { LoginPage } = require('../pages/login');
+const { AccountPage } = require('../pages/account');
 const { generateUser } = require('../utils/datagenerator');
 
 const { Given, When, Then } = createBdd();
@@ -36,4 +36,34 @@ Then('I should see my account balance on the overview page', async ({ page }) =>
   const balance = await accountPage.getBalance();
   console.log(`Account balance for ${user.username}: ${balance}`);
   expect(balance).toBeTruthy();
+});
+
+
+When('I register with mismatched passwords', async ({ page }) => {
+  const registrationPage = new RegistrationPage(page);
+  await registrationPage.goto();
+  const mismatchUser = generateUser();
+  await registrationPage.registerWithMismatchedPasswords(mismatchUser);
+});
+
+Then('I should see a password mismatch error', async ({ page }) => {
+  const registrationPage = new RegistrationPage(page);
+  const error = await registrationPage.getErrorMessage();
+  expect(error).toBeTruthy();
+});
+
+Given('I am on the ParaBank login page', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+});
+
+When('I attempt to login with invalid credentials', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.login('invalidUser_' + Date.now(), 'wrongPassword123');
+});
+
+Then('I should see an invalid login error', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const error = await loginPage.getErrorMessage();
+  expect(error).toBeTruthy();
 });

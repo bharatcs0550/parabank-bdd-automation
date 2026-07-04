@@ -11,3 +11,15 @@ Feature: ParaBank Account Registration and Login
 
     When I log out and log back in with the same credentials
     Then I should see my account balance on the overview page
+
+  # Negative scenarios 
+
+  Scenario: Registration fails when passwords do not match
+    Given I am on the ParaBank registration page
+    When I register with mismatched passwords
+    Then I should see a password mismatch error
+
+  Scenario: Login fails with invalid credentials
+    Given I am on the ParaBank login page
+    When I attempt to login with invalid credentials
+    Then I should see an invalid login error
