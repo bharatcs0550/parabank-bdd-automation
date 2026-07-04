@@ -11,7 +11,7 @@ module.exports = defineConfig({
   reporter: [['html', { open: 'never' }], ['list']],
   use: {
     baseURL: 'https://parabank.parasoft.com',
-    headless: false,          
+    headless: !!process.env.CI,  
     screenshot: 'on',          
     trace: 'on',               
   },
