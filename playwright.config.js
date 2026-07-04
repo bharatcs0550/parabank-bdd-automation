@@ -13,6 +13,7 @@ module.exports = defineConfig({
     baseURL: 'https://parabank.parasoft.com',
     headless: !!process.env.CI,  
     screenshot: 'on',          
+    video: 'on',
     trace: 'on',               
   },
 });
